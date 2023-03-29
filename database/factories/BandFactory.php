@@ -20,9 +20,9 @@ class BandFactory extends Factory
             'bandname' => fake()->company,
             'genre' => fake()->randomElement(['Pop', 'Rock', 'Hip hop', 'Rythm and Blues', 'Jazz', 'Funk', 'Indie', 'Reggae']),
             'location' => fake()->address,
-            'rate' => fake()->randomFloat(2, 99999, 999999),
-            'description' => fake()->paragraph(),
-            'image' => fake()->imageUrl($width = 640, $height = 480)
+            'rate' => fake()->randomFloat(2, 1000, 999999),
+            'description' => fake()->text(),
+            'image' => fake()->imageUrl($width = 640, $height = 640)
         ];
     }
 }
