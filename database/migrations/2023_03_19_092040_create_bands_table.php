@@ -19,7 +19,9 @@ return new class extends Migration
             $table->string('genre');
             $table->string('location');
             $table->decimal('rate', 8,2);
+            $table->integer('total_transactions');
             $table->string('description');
+            $table->string('founder');
             $table->string('image')->nullable();
             $table->timestamps();
         });
