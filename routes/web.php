@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Crud\BandComponent;
+use App\Http\Livewire\Crud\CreateComponent;
+use App\Http\Livewire\Crud\EditComponent;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,3 +21,5 @@ use App\Http\Livewire\Crud\BandComponent;
 // });
 
 Route::get('/', BandComponent::class)->name('bands');
+Route::get('/create-band', CreateComponent::class)->name('create-band');
+Route::get('/edit-profile/{id}', EditComponent::class)->name('edit-profile');

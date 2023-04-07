@@ -14,7 +14,23 @@ class Band extends Model
         'genre',
         'location',
         'rate',
+        'total_transactions',
         'description',
         'image',
     ];
+
+    // protected $guarded = [];
+
+    public function scopeSearch($query, $terms){
+        collect(explode(" " , $terms))
+            ->filter()
+            ->each(function($term) use($query) {
+                $term = "%" . $term . "%";
+
+                $query->where('bandname', 'like', $term)
+                ->orWhere('rate', 'like', $term)
+                ->orWhere('genre', 'like', $term)
+                ->orWhere('location', 'like', $term);
+            });
+    }
 }
