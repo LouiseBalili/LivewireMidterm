@@ -3,17 +3,15 @@
 namespace App\Http\Livewire\Crud;
 
 use Livewire\Component;
-use App\Models\Band;
+use App\Models\Artist;
 use Livewire\WithPagination;
 use Faker\Provider\Image;
 
 
-class BandComponent extends Component
+class ArtistComponent extends Component
 {
-    // use WithFileUploads;
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
-    // public $bandname, $location, $rate, $total_transactions, $description, $image, $genre;
 
     public $search;
     public $sortDirection;
@@ -23,7 +21,7 @@ class BandComponent extends Component
 
     public function render()
     {
-        $query = Band::search($this->search);
+        $query = Artist::search($this->search);
 
         if (!empty($this->selectedGenres)) {
             $query->where(function($query) {
@@ -44,25 +42,23 @@ class BandComponent extends Component
             $query->orderBy('rate', $this->sortDirection);
         }
 
-        $bands = $query->paginate(8);
+        $artists = $query->paginate(6);
 
-        // fetch existing locations from the band table
-        // and removes duplicate.
-        $result = Band::orderBy('id')->get();
+        $result = Artist::orderBy('id')->get();
         $data = $result->toArray();
         $locations = array_unique(array_column($data, 'location'));
 
-        return view('livewire.crud.band-component', [
-            'bands' => $bands,
+        return view('livewire.crud.artist-component', [
+            'artists' => $artists,
             'locations' => $locations,
 
             ])->layout('livewire.layouts.base');
     }
 
-    public function deleteBand($id) {
-        Band::find($id)->delete();
+    public function deleteArtist($id) {
+        Artist::find($id)->delete();
 
-        return redirect('/')->with('message', 'Band deleted successfully!');
+        return redirect('/dashboard')->with('message', 'Artist deleted successfully!');
     }
 
     public function resetFilter(){

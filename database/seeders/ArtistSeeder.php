@@ -4,9 +4,9 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\Band;
+use App\Models\Artist;
 
-class BandSeeder extends Seeder
+class ArtistSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,6 +15,6 @@ class BandSeeder extends Seeder
      */
     public function run()
     {
-        Band::factory(10)->create();
+        Artist::factory(30)->create();
     }
 }

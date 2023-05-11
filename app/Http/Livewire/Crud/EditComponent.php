@@ -3,7 +3,7 @@
 namespace App\Http\Livewire\Crud;
 
 use Livewire\Component;
-use App\Models\Band;
+use App\Models\Artist;
 use Faker\Provider\Image;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\File;
@@ -12,51 +12,106 @@ class EditComponent extends Component
 {
 
     use WithFileUploads;
-    public $bandname, $location, $rate, $total_transactions, $description, $image, $newImage, $genre, $band_id;
-    
+    public $name, $location, $rate, $total_transactions, $description, $image, $newImage, $genre, $artist_id;
+    public $rock, $pop, $rap, $rnb, $jazz, $latin, $soul;
+    public $locations = [ 'Bohol', 'Dumaguete', 'Palawan', 'Cebu', 'Manila', 'Iloilo', 'Pampanga'];
+
     public function mount($id) {
-        $band = Band::find($id);
+        $artist = Artist::find($id);
 
-        $this->bandname = $band->bandname;
-        $this->location = $band->location;
-        $this->rate = $band->rate;
-        $this->total_transactions = $band->total_transactions;
-        $this->description = $band->description;
-        $this->image = $band->image;
-        $this->genre = $band->genre;
+        $this->name = $artist->name;
+        $this->location = $artist->location;
+        $this->rate = $artist->rate;
+        $this->total_transactions = $artist->total_transactions;
+        $this->description = $artist->description;
+        $this->image = $artist->image;
+        $this->genre = $artist->genre;
 
-        $this->band_id = $id;
+        $selectedGenres = explode(',', $artist->genre);
+
+        if(in_array('Rock', $selectedGenres)) {
+            $this->rock = true;
+        }
+        if(in_array('Pop', $selectedGenres)) {
+            $this->pop = true;
+        }
+        if(in_array('Rap', $selectedGenres)) {
+            $this->rap = true;
+        }
+        if(in_array('R&B', $selectedGenres)) {
+            $this->rnb = true;
+        }
+        if(in_array('Jazz', $selectedGenres)) {
+            $this->jazz = true;
+        }
+        if(in_array('Latin', $selectedGenres)) {
+            $this->latin = true;
+        }
+        if(in_array('Soul', $selectedGenres)) {
+            $this->soul = true;
+        }
+
+        $this->artist_id = $id;
     }
 
     public function update() {
         $this->validate([
-            'bandname' => 'string|required',
+            'name' => 'string|required',
             'description' => 'string|required',
             'location' => 'string|required',
-            'genre' => 'required|string',
             'rate' => 'string|required',
-            'image' => 'required',
             'total_transactions' => 'numeric|required',
         ]);
 
         if($this->newImage){
-            $path = $this->newImage->store('public/images');
+            $this->validate(['newImage' => 'required|image|max:2048']);
+            $path = $this->newImage->store('public');
         } else {
             $path = $this->image;
         }
 
-        Band::findOrFail($this->band_id)->update([
-            'bandname' => $this->bandname,
+        $selectedGenres = [];
+
+        if($this->rock) {
+            array_push($selectedGenres, 'Rock');
+        }
+        if($this->pop) {
+            array_push($selectedGenres, 'Pop');
+        }
+        if($this->rap) {
+            array_push($selectedGenres, 'Rap');
+        }
+        if($this->rnb) {
+            array_push($selectedGenres, 'R&B');
+        }
+        if($this->jazz) {
+            array_push($selectedGenres, 'Jazz');
+        }
+        if($this->latin) {
+            array_push($selectedGenres, 'Latin');
+        }
+        if($this->soul) {
+            array_push($selectedGenres, 'Soul');
+        }
+
+        $genre = implode(',', $selectedGenres);
+
+        Artist::findOrFail($this->artist_id)->update([
+            'name' => $this->name,
             'description' => $this->description,
             'location' => $this->location,
-            'genre' => $this->genre,
+            'genre' => $genre,
             'rate' => $this->rate,
             'image' => $path,
             'total_transactions' => $this->total_transactions,
         ]);
 
-        return redirect('/')->with('message', 'Band updated successfully!');
-       
+        return redirect('/dashboard')->with('message', 'Artist updated successfully!');
+
+    }
+
+    public function cancelUpdate() {
+        return redirect('/dashboard');
     }
 
     public function render()

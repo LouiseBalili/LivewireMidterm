@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.navbar-nav {
+    display: flex;
+    align-items: center;
+    height: 100%;
+  }

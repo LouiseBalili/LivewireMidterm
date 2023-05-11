@@ -3,7 +3,7 @@
 namespace App\Http\Livewire\Crud;
 
 use Livewire\Component;
-use App\Models\Band;
+use App\Models\Artist;
 use Faker\Provider\Image;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\File;
@@ -11,7 +11,9 @@ use Illuminate\Support\Facades\File;
 class CreateComponent extends Component
 {
     use WithFileUploads;
-    public $bandname, $location, $rate, $total_transactions, $description, $image, $genre;
+    public $name, $location, $rate, $total_transactions, $description, $image, $genre;
+    public $rock, $pop, $rap, $rnb, $jazz, $latin, $soul;
+    public $locations = [ 'Bohol', 'Dumaguete', 'Palawan', 'Cebu', 'Manila', 'Iloilo', 'Pampanga'];
 
     public function render()
     {
@@ -19,34 +21,64 @@ class CreateComponent extends Component
     }
 
     public function save() {
-        $this->image->store('photos');
+       $path=$this->image->store('public/images');
 
-        return $image;
+        return $path;
     }
 
-    public function addBand() {
+    public function addArtist() {
         $this->validate([
-            'bandname' => 'string|required',
+            'name' => 'string|required',
             'description' => 'string|required',
             'location' => 'string|required',
-            'genre' => 'required|string',
             'rate' => 'string|required',
-            'image' => 'image|required',
+            'image' => 'image',
             'total_transactions' => 'numeric|required',
         ]);
 
-        $path = $this->image->store('public/images');
+        $path = $this->image->store('public');
 
-        Band::create([
-            'bandname' => $this->bandname,
+        $selectedGenres = [];
+
+        if($this->rock) {
+            array_push($selectedGenres, 'Rock');
+        }
+        if($this->pop) {
+            array_push($selectedGenres, 'Pop');
+        }
+        if($this->rap) {
+            array_push($selectedGenres, 'Rap');
+        }
+        if($this->rnb) {
+            array_push($selectedGenres, 'R&B');
+        }
+        if($this->jazz) {
+            array_push($selectedGenres, 'Jazz');
+        }
+        if($this->latin) {
+            array_push($selectedGenres, 'Latin');
+        }
+        if($this->soul) {
+            array_push($selectedGenres, 'Soul');
+        }
+
+        $genre = implode(',', $selectedGenres);
+
+        Artist::create([
+            'name' => $this->name,
             'description' => $this->description,
             'location' => $this->location,
-            'genre' => $this->genre,
+            'genre' => $genre,
             'rate' => $this->rate,
             'image' => $path,
             'total_transactions' => $this->total_transactions
         ]);
 
-        return redirect('/')->with('message', 'Band created successfully');
+        return redirect('/dashboard')->with('message', 'Artist created successfully');
+    }
+
+
+    public function cancelRegistration() {
+        return redirect('/dashboard');
     }
 }

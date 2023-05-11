@@ -5,12 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Band extends Model
+class Artist extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'bandname',
+        'name',
         'genre',
         'location',
         'rate',
@@ -27,7 +27,7 @@ class Band extends Model
             ->each(function($term) use($query) {
                 $term = "%" . $term . "%";
 
-                $query->where('bandname', 'like', $term)
+                $query->where('name', 'like', $term)
                 ->orWhere('rate', 'like', $term)
                 ->orWhere('genre', 'like', $term)
                 ->orWhere('location', 'like', $term);

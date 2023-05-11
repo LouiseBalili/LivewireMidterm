@@ -1,131 +1,87 @@
 <div>
-    <!-- <div class="mt-5">
-        <div class="container col-6 col md-4">
-            <form wire:submit.prevent="addBand()">
-            <div class="d-flex align-items-center">
-                <div class="form-group w-50">
-                <label for="" style="color:dimgray">Add Band Photo:</label>
-                <input type="file" wire:model="image"
-                    class="form-control">
-                @error('image')
-                    <span class="text-danger">{{ $message }}</span>
-                @enderror
-                </div>
-
-                <div class="d-block p-3">
-                    @if ($image)
-                    <p class="fs-6 mb-0">Photo Preview:</p>
-                        <img src="{{ $image->temporaryUrl() }}" style="width:100px; height:100px">
-                    @else
-                    <p></p>
-                    <div class="container" style="width:100px; height:100px"></div>
-                    @endif
-                </div>
-            </div>
-            <div class="form-group w-50 mb-3">
-                <label for="" style="color:dimgray">Band Name:</label>
-                <input type="text" class="form-control"
-                    wire:model="bandname">
-                @error('bandname')
-                <span class="text-danger">{{ $message }}</span>
-                @enderror
-            </div>
-            <div class="form-group w-50 mb-3">
-                <label for="" style="color:dimgray">Description:</label>
-                <textarea type="text" class="form-control"
-                    wire:model="description"></textarea>
-                @error('description')
-                <span class="text-danger">{{ $message }}</span>
-                @enderror
-            </div>
-            <div class="form-group w-50 mb-3">
-                <label for="" style="color:dimgray">Genre:</label>
-                <input type="text" class="form-control"
-                    wire:model="genre">
-                @error('genre')
-                <span class="text-danger">{{ $message }}</span>
-                @enderror
-            </div>
-            <div class="form-group w-50 mb-3">
-                <label for="" style="color:dimgray">Rate:</label>
-                <input type="text" class="form-control"
-                    wire:model="rate">
-                @error('rate')
-                <span class="text-danger">{{ $message }}</span>
-                @enderror
-            </div>
-            <div class="form-group w-50 mb-3">
-                <label for="" style="color:dimgray">Location:</label>
-                <input type="text" class="form-control"
-                    wire:model="location">
-                @error('location')
-                <span class="text-danger">{{ $message }}</span>
-                @enderror
-            </div>
-            <div class="form-group w-50 mb-3">
-                <label for="" style="color:dimgray">Founder:</label>
-                <input type="text" class="form-control"
-                    wire:model="founder">
-                @error('founder')
-                <span class="text-danger">{{ $message }}</span>
-                @enderror
-            </div>
-            <div class="form-group w-50 mb-3">
-                <label for="" style="color:dimgray">Total Transactions:</label>
-                <input type="text" class="form-control"
-                    wire:model="total_transactions">
-                @error('total_transactions')
-                <span class="text-danger">{{ $message }}</span>
-                @enderror
-            </div>
-            <button type="submit" class="btn btn-primary">Add Band</button>
-        </div>
-        </form>
-    </div> -->
-
     <div class="container col-6 col-md-4 mt-5">
-        <div class="card mb-5 p-4 shadow-sm">
-        <!-- <div class="p-4"> -->
-        <form wire:submit.prevent="addBand()">
-            <h4 class="text-center mb-3">Add new band</h4>
+        <div class="card mb-5 p-4 shadow-sm" style="background-color:#37383b;">
+
+        <form wire:submit.prevent="addArtist()">
+            <h4 class="text-center mb-3 text-light">Add A New Artist</h4>
             <div class="text-center">
             @if ($image)
-                <p class="fs-6 mb-0">Photo Preview:</p>
+                <p class="fs-6 mb-0 text-light">Photo Preview:</p>
                 <img src="{{ $image->temporaryUrl() }}" class="rounded-circle text-center mt-2" style="width:150px; height:150px">
             @else
             @endif
             </div>
-            <div class="mb-3">      
-                <label for="formFile" class="form-label">Add band photo</label>
+            <div class="mb-3">
+                <label for="formFile" class="form-label text-light">Add a Photo</label>
                 <input wire:model="image" class="form-control" type="file" id="formFile">
             </div>
             <div class="mb-3">
-                <label for="exampleFormControlInput1" class="form-label">Band Name:</label>
-                <input wire:model="bandname" type="text" class="form-control" id="exampleFormControlInput1">
+                <label for="exampleFormControlInput1" class="form-label text-light">Name:</label>
+                <input wire:model="name" type="text" class="form-control" id="exampleFormControlInput1">
             </div>
             <div class="mb-3">
-            <label for="exampleFormControlTextarea1" class="form-label">Description:</label>
+            <label for="exampleFormControlTextarea1" class="form-label text-light">Description:</label>
             <textarea wire:model="description" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
             </div>
             <div class="mb-3">
-                <label for="exampleFormControlInput1" class="form-label">Genre:</label>
-                <input wire:model="genre" type="text" class="form-control" id="exampleFormControlInput1">
+                <label class="form-label text-light">Genre:</label>
+                <div>
+                    <div class="form-check form-check-inline">
+                        <input wire:model="rock" class="form-check-input" type="checkbox" id="rock" value="Rock">
+                        <label class="form-check-label text-light" for="rock">Rock</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input wire:model="pop" class="form-check-input" type="checkbox" id="pop" value="Pop">
+                        <label class="form-check-label text-light" for="pop">Pop</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input wire:model="rap" class="form-check-input" type="checkbox" id="rap" value="Rap">
+                        <label class="form-check-label text-light" for="rap">Rap</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input wire:model="rnb" class="form-check-input" type="checkbox" id="rnb" value="R&B">
+                        <label class="form-check-label text-light" for="rnb">R&B</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input wire:model="jazz" class="form-check-input" type="checkbox" id="jazz" value="Jazz">
+                        <label class="form-check-label text-light" for="jazz">Jazz</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input wire:model="latin" class="form-check-input" type="checkbox" id="latin" value="Latin">
+                        <label class="form-check-label text-light" for="latin">Latin</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input wire:model="soul" class="form-check-input" type="checkbox" id="soul" value="Soul">
+                        <label class="form-check-label text-light" for="soul">Soul</label>
+                    </div>
+                </div>
             </div>
             <div class="mb-3">
-                <label for="exampleFormControlInput1" class="form-label">Location:</label>
-                <input wire:model="location" type="text" class="form-control" id="exampleFormControlInput1">
+                <label for="exampleFormControlInput1" class="form-label text-light">Location:</label>
+                <select wire:model="location" class="form-select" id="exampleFormControlSelect1">
+                    <option value="">Select Location</option>
+                    @foreach($locations as $loc)
+                    <option value="{{ $loc }}">{{ $loc }}</option>
+                    @endforeach
+                </select>
             </div>
+
             <div class="mb-3">
-                <label for="exampleFormControlInput1" class="form-label">Rate:</label>
+                <label for="exampleFormControlInput1" class="form-label text-light">Rate:</label>
                 <input wire:model="rate" type="text" class="form-control" id="exampleFormControlInput1">
             </div>
             <div class="mb-3">
-                <label for="exampleFormControlInput1" class="form-label">Total Transactions:</label>
+                <label for="exampleFormControlInput1" class="form-label text-light">Total Transactions:</label>
                 <input wire:model="total_transactions" type="text" class="form-control" id="exampleFormControlInput1">
             </div>
-            <button class="btn btn-primary mb-3" type="submit">Register Band</button>
+
+            <div class="d-flex justify-content-end">
+                <button class="btn btn-primary mb-3" type="submit">Register as New Artist</button>
+                <button type="button" class="btn btn-secondary mb-3" wire:click="cancelRegistration" style="margin-left:9px;">Close</button>
+            </div>
+
         </form>
-                                <!-- </div> -->
+
         </div>
     </div>
 </div>
